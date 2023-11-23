@@ -28,7 +28,6 @@ class Employee(models.Model):
 
     def write(self, vals):
         res = super(Employee, self).write(vals)
-        _logger.info(res)
 
         # send data to kafka
         topic = "employee13_updated"
@@ -37,7 +36,7 @@ class Employee(models.Model):
         producer = KafkaProducer(bootstrap_servers=eval(producerRecord.host),
                         value_serializer=lambda x: dumps(x).encode('utf-8'))
         for x in self:
-            producer.send(topic, value={"id": x.id, "vals":vals} )
+            producer.send(topic, value={"pin": x.pin, "id": x.id, "vals":vals} )
             producer.flush()
         
         return res 
