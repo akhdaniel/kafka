@@ -29,7 +29,7 @@ class Employee(models.Model):
         res = super(Employee, self).write(vals)
 
         # send data to kafka
-        topic = "employee13-updated"
+        topic = "employee13_updated"
         producerRecord = self.env['kafka.master.consumer'].search([('active', '=', True), ('name', '=', topic)], limit=1)
 
         producer = KafkaProducer(bootstrap_servers=eval(producerRecord.host),
