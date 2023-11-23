@@ -19,7 +19,7 @@ class Employee(models.Model):
         required=True
     )
     
-    # 16 consumer
+    #  consumer from 16
     def employee_updated(self, message):
         _logger.info('**************************** modify employee ********************')
         _logger.info(message) #json
