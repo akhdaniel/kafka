@@ -59,7 +59,7 @@
                                 <field name="values"/>
                             </group>
                         </group>
-                        <!-- <group name="tooltips" string="Tooltips">
+                        <group name="tooltips" string="Tooltips">
                             <p class="text-muted" colspan="2">
                                 <ul>
                                     <li>
@@ -102,7 +102,7 @@
                                     </li>
                                 </ul>
                             </p>
-                        </group> -->
+                        </group>
                     </sheet>
                 </form>
             </field>
