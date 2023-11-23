@@ -38,102 +38,103 @@ class RunKafka(object):
         pass
 
     def loop(self, topic=None, seq=None):
-        with self.registry.cursor() as new_cr:
-            new_env = api.Environment(new_cr, SUPERUSER_ID, {})
-            master_consumer = new_env['kafka.master.consumer'].search(
-                [('active', '=', True), ('name', '=', topic)], limit=1)
-            new_env.cr.commit()
+        with api.Environment.manage():
+            with self.registry.cursor() as new_cr:
+                new_env = api.Environment(new_cr, SUPERUSER_ID, {})
+                master_consumer = new_env['kafka.master.consumer'].search(
+                    [('active', '=', True), ('name', '=', topic)], limit=1)
+                new_env.cr.commit()
 
-            if master_consumer:
-                host = master_consumer.host
-                params = master_consumer.params
-                group = master_consumer.group
-                topic = master_consumer.name
-                model = master_consumer.model_name.model
-                function = master_consumer.function
-                poll_timeout = master_consumer.poll_timeout
-                fetch_interval = master_consumer.fetch_interval
+                if master_consumer:
+                    host = master_consumer.host
+                    params = master_consumer.params
+                    group = master_consumer.group
+                    topic = master_consumer.name
+                    model = master_consumer.model_name.model
+                    function = master_consumer.function
+                    poll_timeout = master_consumer.poll_timeout
+                    fetch_interval = master_consumer.fetch_interval
 
-                consumer = eval(
-                    'KafkaConsumer(bootstrap_servers=' + host + ',' + params + ',' + 'group_id=' + "'" + group + "'" + ')')
-                topics = consumer.topics()
-                if master_consumer.name in topics:
-                    pass
-                else:
-                    master_consumer.running = False
-                    raise ValidationError(_('Topic not found!'))
-                # consumer.subscribe(topic or master_consumer.group or False)
-                _logger.info("KAFKA: Listening topic [%s] is active" % topic)
-
-                consumer.subscribe(topic)
-                while True:
-                    consumer_poll = consumer.poll(timeout_ms=poll_timeout)
-                    master_consumer = new_env['kafka.master.consumer'].search(
-                        [('active', '=', True), ('name', '=', topic)], limit=1)
-                    new_env.cr.commit()
-                    if master_consumer and not master_consumer.running:
-                        consumer.unsubscribe()
-                        consumer.close(autocommit=False)
-                        raise ValidationError(_('Kafka stopped by Button STOP!'))
-
-                    if len(consumer_poll) < 1:
-                        time.sleep(fetch_interval)
-                        continue
+                    consumer = eval(
+                        'KafkaConsumer(bootstrap_servers=' + host + ',' + params + ',' + 'group_id=' + "'" + group + "'" + ')')
+                    topics = consumer.topics()
+                    if master_consumer.name in topics:
+                        pass
                     else:
-                        for tp, messages in consumer_poll.items():
-                            for message in messages:
-                                # more check, if master change after this looping
-                                # so master_consumer will get new data
-                                master_consumer = new_env['kafka.master.consumer'].search(
-                                    [('active', '=', True), ('name', '=', topic)], limit=1)
-                                new_env.cr.commit()
+                        master_consumer.running = False
+                        raise ValidationError(_('Topic not found!'))
+                    # consumer.subscribe(topic or master_consumer.group or False)
+                    _logger.info("KAFKA: Listening topic [%s] is active" % topic)
 
-                                vals = message.value
-                                f = 'new_env["' + model + '"].' + function + '(%s)' % vals
-                                try:
-                                    eval(f)
+                    consumer.subscribe(topic)
+                    while True:
+                        consumer_poll = consumer.poll(timeout_ms=poll_timeout)
+                        master_consumer = new_env['kafka.master.consumer'].search(
+                            [('active', '=', True), ('name', '=', topic)], limit=1)
+                        new_env.cr.commit()
+                        if master_consumer and not master_consumer.running:
+                            consumer.unsubscribe()
+                            consumer.close(autocommit=False)
+                            raise ValidationError(_('Kafka stopped by Button STOP!'))
+
+                        if len(consumer_poll) < 1:
+                            time.sleep(fetch_interval)
+                            continue
+                        else:
+                            for tp, messages in consumer_poll.items():
+                                for message in messages:
+                                    # more check, if master change after this looping
+                                    # so master_consumer will get new data
+                                    master_consumer = new_env['kafka.master.consumer'].search(
+                                        [('active', '=', True), ('name', '=', topic)], limit=1)
                                     new_env.cr.commit()
-                                    consumer.commit()
-                                except Exception as e:
-                                    new_env.cr.commit()
-                                    _logger.info(
-                                        "KAFKA %s EXCEPTION ==> %s" % (seq, 'Cannot execute function [%s], makesure '
-                                                                            'you have correct parameters according in '
-                                                                            'this master consumer topic %s. '
-                                                                            'Error message: %s' % (function, topic, e)))
-                                    if master_consumer.commit_on_error:
-                                        if master_consumer.stop_on_error:
-                                            # if stop when error True, kafka will close connection and commit
-                                            # current offset
-                                            consumer.close(autocommit=True)
-                                            self.send_notification(model_name=master_consumer._name,
-                                                                   res_id=master_consumer.id, error=e)
 
-                                            raise ValidationError(_('%s' % e))
-                                        else:
-                                            # keep kafka run, and commit current offset
-                                            continue
-                                    else:
-                                        # Kafka will not commit current offset, and will retry till func execution
-                                        # success and offset committed
-                                        if master_consumer.stop_on_error:
-                                            # Kafka will stop and no commit current offset
-                                            consumer.unsubscribe()
-                                            consumer.close(autocommit=False)
-                                            self.send_notification(model_name=master_consumer._name,
-                                                                   res_id=master_consumer.id, error=e)
-                                            self.env.cr.commit()
-                                            raise ValidationError(_('%s' % e))
-                                        else:
-                                            # if nothing checklist, kafka will continue and retry uncommitted offset
-                                            consumer.unsubscribe()
-                                            time.sleep(10)
-                                            consumer.subscribe(topic)
-                                            continue
+                                    vals = message.value
+                                    f = 'new_env["' + model + '"].' + function + '(%s)' % vals
+                                    try:
+                                        eval(f)
+                                        new_env.cr.commit()
+                                        consumer.commit()
+                                    except Exception as e:
+                                        new_env.cr.commit()
+                                        _logger.info(
+                                            "KAFKA %s EXCEPTION ==> %s" % (seq, 'Cannot execute function [%s], makesure '
+                                                                                'you have correct parameters according in '
+                                                                                'this master consumer topic %s. '
+                                                                                'Error message: %s' % (function, topic, e)))
+                                        if master_consumer.commit_on_error:
+                                            if master_consumer.stop_on_error:
+                                                # if stop when error True, kafka will close connection and commit
+                                                # current offset
+                                                consumer.close(autocommit=True)
+                                                self.send_notification(model_name=master_consumer._name,
+                                                                    res_id=master_consumer.id, error=e)
 
-                                _logger.info("KAFKA %s RETURN ==> %s" % (seq, message))
-            else:
-                raise ValidationError(_('No data found in Master Consumer!'))
+                                                raise ValidationError(_('%s' % e))
+                                            else:
+                                                # keep kafka run, and commit current offset
+                                                continue
+                                        else:
+                                            # Kafka will not commit current offset, and will retry till func execution
+                                            # success and offset committed
+                                            if master_consumer.stop_on_error:
+                                                # Kafka will stop and no commit current offset
+                                                consumer.unsubscribe()
+                                                consumer.close(autocommit=False)
+                                                self.send_notification(model_name=master_consumer._name,
+                                                                    res_id=master_consumer.id, error=e)
+                                                self.env.cr.commit()
+                                                raise ValidationError(_('%s' % e))
+                                            else:
+                                                # if nothing checklist, kafka will continue and retry uncommitted offset
+                                                consumer.unsubscribe()
+                                                time.sleep(10)
+                                                consumer.subscribe(topic)
+                                                continue
+
+                                    _logger.info("KAFKA %s RETURN ==> %s" % (seq, message))
+                else:
+                    raise ValidationError(_('No data found in Master Consumer!'))
 
     def run(self):
         topic = self.topic
