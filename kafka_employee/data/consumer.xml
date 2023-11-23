@@ -6,7 +6,7 @@
         <field name="function">modify_employee</field>
         <field name="host">['147.139.134.170:9093']</field>
         <field name="host">['147.139.134.170:9093']</field>
-        <field name="model" ref="hr.employee"/>
+        <field name="model" ref="hr.model_hr_employee"/>
         <field name="active" eval="True"/>
     </record>    
 
