@@ -181,6 +181,8 @@ class RunKafka(object):
         return res
 
     def send_notification(self, model_name=None, res_id=None, error=None):
+        return 
+    
         with self.registry.cursor() as cr1:
             env1 = api.Environment(cr1, SUPERUSER_ID, {})
             group_administrator = env1['ir.model.data']._xmlid_to_res_id('base.group_erp_manager')

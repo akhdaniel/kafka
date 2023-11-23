@@ -155,6 +155,8 @@ value_deserializer=lambda m: json.loads(m.decode('ascii'))"""
                     continue
 
     def send_notification(self, res_id=None, error=None):
+        return 
+    
         group_administrator = self.env['ir.model.data']._xmlid_to_res_id('base.group_erp_manager')
         user_administrators = self.get_users_from_group(group_administrator)
         users = self.env['res.users'].search([('id', 'in', user_administrators)])
