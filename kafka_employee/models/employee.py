@@ -8,7 +8,11 @@ from json import dumps
 import logging
 _logger = logging.getLogger(__name__)
 
-
+topics = [
+    "employee13_created",
+    "employee13_updated",
+    "employee13_deleted",
+]
     
 class Employee(models.Model):
     _inherit = 'hr.employee'
@@ -38,11 +42,7 @@ class Employee(models.Model):
     
 
     def init(self):
-        topics = [
-            "employee13_created",
-            "employee13_updated",
-            "employee13_deleted",
-        ]
+
         _logger.info(f'initialize topics for v13...{topics}')
         producerRecord = self.env['kafka.master.consumer'].search([('active', '=', True), ('name', '=', 'template')], limit=1)
 
