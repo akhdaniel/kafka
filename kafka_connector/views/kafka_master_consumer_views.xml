@@ -108,7 +108,7 @@
             </field>
         </record>
 
-        <record id="kafka_master_consumer_action" model="ir.actions.act_window">
+        <!-- <record id="kafka_master_consumer_action" model="ir.actions.act_window">
             <field name="name">Kafka Master Consumer</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">kafka.master.consumer</field>
@@ -118,12 +118,12 @@
                     There is no examples click here to add new.
                 </p>
             </field>
-        </record>
+        </record> -->
 
         <!-- This Menu Item must have a parent and an action -->
-        <menuitem id="kafka_master_consumer" name="Kafka Master Consumer" parent="base.menu_automation"
+        <!-- <menuitem id="kafka_master_consumer" name="Kafka Master Consumer" parent="base.menu_automation"
                   action="kafka_master_consumer_action"
-                  sequence="2"/>
+                  sequence="2"/> -->
 
 <!-- 
         <record id="action_start_stop_consumer_batch_mode" model="ir.actions.server">
