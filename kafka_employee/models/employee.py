@@ -46,7 +46,7 @@ class Employee(models.Model):
         _logger.info(f'initialize topics for v13...{topics}')
         producerRecord = self.env['kafka.master.consumer'].search([('active', '=', True), ('name', '=', 'template')], limit=1)
 
-        producer = KafkaProducer(bootstrap_servers=eval(producerRecord.host),
+        producer = KafkaProducer(bootstrap_servers=eval(producerRecord.host or "['147.139.134.170:9093']"),
                         value_serializer=lambda x: dumps(x).encode('utf-8'))
         for topic in topics:
             producer.send(topic, value={} )
