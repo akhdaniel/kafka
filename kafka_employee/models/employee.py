@@ -23,7 +23,22 @@ class Employee(models.Model):
     def employee_updated(self, message):
         _logger.info('**************************** modify employee ********************')
         _logger.info(message) #json
-        # self.env['hr.employee'].write( message )
+
+        id = message.get('id') 
+        nip = message.get('nip') 
+        vals = message.get('vals') 
+        # self.env['hr.employee'].sudo().browse(id).write( vals )
+
+        if nip and vals:
+            kv=[]
+            sql = "update hr_employee"
+            sql += " set "
+            for key in vals.keys():
+                kv.append(f"{key}='{vals[key]}'")
+            sql += ", ".join(kv)
+            sql += f" where nip='{nip}'"
+
+            self.env.cr.execute(sql)
 
     # 16 consumer
     def employee_created(self, message):
@@ -42,7 +57,7 @@ class Employee(models.Model):
         producer = KafkaProducer(bootstrap_servers=eval(producerRecord.host),
                         value_serializer=lambda x: dumps(x).encode('utf-8'))
         for x in self:
-            producer.send(topic, value={"pin": x.pin, "id": x.id, "vals":vals} )
+            producer.send(topic, value={"nip": x.nip, "id": x.id, "vals":vals} )
             producer.flush()
         
         return res 
