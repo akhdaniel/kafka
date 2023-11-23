@@ -28,6 +28,7 @@ class Employee(models.Model):
 
     def write(self, vals):
         res = super(Employee, self).write(vals)
+        _logger.info(res)
 
         # send data to kafka
         topic = "employee13_updated"
