@@ -1,0 +1,260 @@
+<html>
+    <body>
+        <section class="oe_container"
+                 style="padding-bottom:10px;padding-top:2px;padding-left: 0px;padding-right: 0px;">
+
+            <div class='row'>
+                <div class="col-sm-12 col-12 col-lg-12">
+                    <a class="float-right" href="https://kafka.apache.org/" target="_blank"><img
+                            src="ApacheKafka.png" style="width: 20%"/></a>
+                </div>
+            </div>
+            <hr style="border-bottom: #000000 solid 1px; border-style: inset; width: 100%;"/>
+
+
+            <div class="col-sm-12 col-12 col-lg-12 text-center">
+                <h4 class="oe_centered text-primary"
+                    style="font-size: calc(16px + 1.3vw); font-family: 'Lato', 'Open Sans', 'Helvetica', Sans;margin: 15px; text-align: center;">
+                    Apache Kafka&reg; Connector
+                </h4>
+                <span class="oe_centered text-primary"
+                      style="font-size: calc(14px + 0.5vw); font-family: 'Lato', 'Open Sans', 'Helvetica', Sans;margin: 15px; text-align: center;">
+                   Odoo Kafka Connector - Real-Time Data Fetching</span><br/>
+            </div>
+
+            <div class="col-sm-12 col-12 col-lg-12" style="margin-top: 50px; padding-left: 5%;">
+                <span style="margin-right: 4px; font-size: calc(14px + 0.5vw); font-family: 'Lato', 'Open Sans', 'Helvetica', Sans;margin: 15px;">
+                    Making odoo as Kafka Consumer, which can run in the background.</span>
+            </div>
+            <div class="col-sm-12 col-12 col-lg-12" style="margin-top: 20px; padding-left: 5%;">
+                <h6
+                        style="margin-right: 4px; font-size: calc(14px + 0.5vw); font-family: 'Lato', 'Open Sans', 'Helvetica', Sans;margin: 15px;">
+                    Features</h6>
+                <ul>
+
+                    <li>
+                        <p style="color: black; font-size: calc(16px + 0.3vw); text-align: justify;
+                    font-family: Times New Roman;">Create multiple KafkaConsumer to run concurrently</p>
+                    </li>
+                    <li>
+                        <p style="color: black; font-size: calc(16px + 0.3vw); text-align: justify;
+                    font-family: Times New Roman;">Configured via Master Consumer</p>
+                    </li>
+                    <li>
+                        <p style="color: black; font-size: calc(16px + 0.3vw); text-align: justify;
+                    font-family: Times New Roman;">Sends a return in the form of JSON to the function parameter
+                            specified in the Consumer Master</p>
+                    </li>
+                    <li>
+                        <p style="color: black; font-size: calc(16px + 0.3vw); text-align: justify;
+                    font-family: Times New Roman;">Can turn KafkaConsumer on and off with just click of a button</p>
+                    </li>
+                    <li>
+                        <p style="color: black; font-size: calc(16px + 0.3vw); text-align: justify;
+                    font-family: Times New Roman;">Logger is available in the script, so when a failure occurs it can be
+                            investigated via log messages</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-sm-12 col-12 col-lg-12" style="margin-top: 20px; padding-left: 5%;">
+                <h6 style="margin-right: 4px; font-size: calc(14px + 0.5vw); font-family: 'Lato', 'Open Sans', 'Helvetica', Sans;margin: 15px;">
+                    Requirements</h6>
+                <ul>
+                    <li>
+                        <p style="color: black; font-size: calc(16px + 0.3vw); text-align: justify;
+                    font-family: Times New Roman;">Install python library: <code>pip install kafka-python</code></p>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="col-sm-12 col-12 col-lg-12" style="margin-top: 20px; padding-left: 5%;">
+                <h6 style="margin-right: 4px; font-size: calc(14px + 0.5vw); font-family: 'Lato', 'Open Sans', 'Helvetica', Sans;margin: 15px;">
+                    Compatibility</h6>
+                <span style="color: black; font-size: calc(16px + 0.3vw);font-family: Times New Roman;margin: 15px;">
+                    Odoo Community and Enterprise Editions with kafka-python library
+                </span>
+            </div>
+
+            <hr style="border-bottom: #000000 solid 1px; border-style: inset; width: 100%;"/>
+
+            <div class="col-sm-12 col-12 col-lg-12 text-center" style="margin-top: 70;">
+                <h4 class="oe_centered text-primary"
+                    style="font-size: calc(16px + 1.3vw); font-family: 'Lato', 'Open Sans', 'Helvetica', Sans;margin: 15px; text-align: center;">
+                    How to use:
+                </h4>
+            </div>
+
+            <div class="col-sm-12 col-12 col-lg-12 text-center">
+                <h6 class="oe_centered text-primary"
+                    style="font-size: calc(14px + 0.5vw); font-family: 'Lato', 'Open Sans', 'Helvetica', Sans;margin: 15px; text-align: center;">
+                    # Create Master Consumer
+                </h6>
+                <p style="font-family: 'Lato', 'Open Sans', 'Helvetica', Sans;font-size: 15px;">The location of the
+                    Master Consumer menu is in <b>Settings</b> => <b>Technical</b> => <b>
+                        Automation</b> => <b>Kafka Master Consumer</b> [with user group admin]
+                </p>
+                <img class="img img-responsive center-block oe_centered oe_demo oe_screenshot"
+                     src="CreateMasterConsumer.png"
+                     style="display: block; margin-top: 20px;margin-left: auto; margin-right: auto;width: 90%;margin-bottom: 30px;"/>
+                <img class="img img-responsive center-block oe_centered oe_demo oe_screenshot"
+                     src="TreeViewMasterConsumer.png"
+                     style="display: block; margin-top: 20px;margin-left: auto; margin-right: auto;width: 90%;margin-bottom: 30px;"/>
+            </div>
+            <div class="col-sm-12 col-12 col-lg-12">
+                <ul style="margin-left: 0%; padding-left: 5%;">
+                    <li>
+                        <p style="margin-right: 4px; color: black; font-size: calc(16px + 0.3vw); text-align: justify;
+                    font-family: Times New Roman;">Fill in the mandatory fields correctly, you can click the <b>GET
+                            VALUES</b> button to see the return results from Kafka in JSON format which is useful for
+                            mapping values.</p>
+                    </li>
+                </ul>
+            </div>
+
+            <hr style="border-bottom: #000000 solid 1px; border-style: inset; width: 100%;margin-bottom: 50px;"/>
+
+            <div class="col-sm-12 col-12 col-lg-12 text-center" style="margin-top: 50px">
+                <h6 class="oe_centered text-primary"
+                    style="font-size: calc(14px + 0.5vw); font-family: 'Lato', 'Open Sans', 'Helvetica', Sans;margin: 15px; text-align: center;">
+                    # Create Method on Your Custom Module
+                </h6>
+                <img class="img img-responsive center-block oe_centered oe_demo oe_screenshot"
+                     src="MethodExample.png"
+                     style="display: block; margin-left: auto; margin-right: auto;margin-bottom: 30px;width: 90%;"/>
+            </div>
+            <div class="col-sm-12 col-12 col-lg-12">
+                <ul style="margin-left: 0%; padding-left: 5%;">
+                    <li>
+                        <p style="margin-right: 4px; color: black; font-size: calc(16px + 0.3vw); text-align: justify;
+                    font-family: Times New Roman;">Create a function that will be used to receive JSON and perform
+                            certain operations. In this example, the function is to create a new SO record from
+                            the
+                            captured Kafka message. By default, the user used to run this function is SUPERUSER_ID, you
+                            can specify the default user in the function to match record rule user access model.</p>
+                    </li>
+                </ul>
+            </div>
+
+            <hr style="border-bottom: #000000 solid 1px; border-style: inset; width: 100%;"
+                style="margin-bottom: 50px;"/>
+
+            <div class="col-sm-12 col-12 col-lg-12 text-center" style="margin-top: 50px">
+                <h6 class="oe_centered text-primary"
+                    style="font-size: calc(14px + 0.5vw); font-family: 'Lato', 'Open Sans', 'Helvetica', Sans;margin: 15px; text-align: center;">
+                    # Done
+                </h6>
+                <img class="img img-responsive center-block oe_centered oe_demo oe_screenshot"
+                     src="KafkaLog.png"
+                     style="display: block; margin-left: auto; margin-right: auto;width: 90%;margin-bottom: 30px;"/>
+            </div>
+            <div class="col-sm-12 col-12 col-lg-12">
+                <ul style="margin-left: 0%; padding-left: 5%;">
+                    <li>
+                        <p style="margin-right: 4px; color: black; font-size: calc(16px + 0.3vw); text-align: justify;
+                    font-family: Times New Roman;">The logger results when odoo receives a message from
+                            KafkaConsumer.</p>
+                    </li>
+                </ul>
+            </div>
+
+            <hr style="border-bottom: #000000 solid 1px; border-style: inset; width: 100%;"
+                style="margin-bottom: 50px;"/>
+
+            <div class="col-sm-12 col-12 col-lg-12 text-center" style="margin-top: 50px">
+                <h6 class="oe_centered text-primary"
+                    style="font-size: calc(14px + 0.5vw); font-family: 'Lato', 'Open Sans', 'Helvetica', Sans;margin: 15px; text-align: center;">
+                    # Sales Quotation Created
+                </h6>
+                <img class="img img-responsive center-block oe_centered oe_demo oe_screenshot"
+                     src="SoCreated.png"
+                     style="display: block; margin-left: auto; margin-right: auto;width: 90%;margin-bottom: 30px;"/>
+            </div>
+            <div class="col-sm-12 col-12 col-lg-12">
+                <ul style="margin-left: 0%; padding-left: 5%;">
+                    <li>
+                        <p style="margin-right: 4px; color: black; font-size: calc(16px + 0.3vw); text-align: justify;
+                    font-family: Times New Roman;">As a result of executing the function, a new Sales Quotation record
+                            has been created. Make sure the function you create has gone through testing so that no
+                            errors occur when Kafka is running.</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-sm-12 col-12 col-lg-12 text-center" style="margin-top: 50px">
+                <h6 class="oe_centered text-primary"
+                    style="font-size: calc(14px + 0.5vw); font-family: 'Lato', 'Open Sans', 'Helvetica', Sans;margin: 15px; text-align: center;">
+                    # Stop KafkaConsumer
+                </h6>
+                <img class="img img-responsive center-block oe_centered oe_demo oe_screenshot"
+                     src="StopKafka.png"
+                     style="display: block; margin-left: auto; margin-right: auto;width: 90%;margin-bottom: 30px;"/>
+                <img class="img img-responsive center-block oe_centered oe_demo oe_screenshot"
+                     src="ClosingConnection.png"
+                     style="display: block; margin-left: auto; margin-right: auto;width: 90%;margin-bottom: 30px;"/>
+            </div>
+            <div class="col-sm-12 col-12 col-lg-12">
+                <ul style="margin-left: 0%; padding-left: 5%;">
+                    <li>
+                        <p style="margin-right: 4px; color: black; font-size: calc(16px + 0.3vw); text-align: justify;
+                    font-family: Times New Roman;">KafkaConsumer will automatically stop when the odoo service is turned
+                            off or restarted, but you can turn it off manually by clicking the <b>STOP</b> button in the
+                            Form View or Tree View.</p>
+                    </li>
+                </ul>
+            </div>
+            <br/>
+
+            <hr style="border-bottom: #000000 solid 1px; border-style: inset; width: 100%;margin-bottom: 50px;"/>
+
+            <div class="col-sm-12 col-12 col-lg-12" style="margin-right: 4px; color: black; font-size: calc(16px + 0.3vw); text-align: justify;
+                    font-family: Times New Roman;">
+                <p>
+                    The odoo feature allows users to use KafkaProducer by default, with import <code>from kafka import
+                    KafkaProducer</code>. So, this module doesn't provide that feature because it's easy to
+                    do.<br/><br/>
+                    To send message to Kafka, just do like the following example:
+                </p><br/>
+                <pre>
+from odoo import models, fields, api
+from kafka import KafkaProducer
+from json import dumps
+<br/>
+
+class POInherit(models.Model):
+    _inherit = 'purchase.order'
+    <br/>
+
+    @api.model
+    def create(self, values):
+        producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
+                        value_serializer=lambda x: dumps(x).encode('utf-8'))
+        for x in self:
+            data = {
+                'partner_id': 1
+                }
+            producer.send('po-topic', value=data)
+            producer.flush()
+        <br/>
+        return super(POInherit, self).create(values)
+                </pre>
+            </div>
+
+            <div class='row justify-content-center' style="margin-top: 100px;">
+                <hr style="border-bottom: #000000 solid 1px; border-style: inset; width: 97%;"/>
+                <p class="fa fa-inbox" style="color: #000000; font-size: calc(13.6px + 0.3vw); font-weight: bold;
+        text-align: center; margin: 0px 5px;"> Contact us, if you have any questions or technical assistance.</p>
+                <hr style="border-bottom: #000000 solid 1px; border-style: inset; width: 97%;"/>
+            </div>
+            <div class='row justify-content-center'>
+                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" style="margin: 5px auto;" align="center">
+                    <a target="_blank" href="mailto:akhmadmaulanaafifi@gmail.com"><img
+                            src="Email.png" style="vertical-align: middle; border-radius: 50%; width: 25px;"></a>
+                    <a target="_blank" href="https://www.linkedin.com/in/akhmad-maulana-afifi/"><img
+                            src="Linkedin.jpg" style="vertical-align: middle; border-radius: 50%; width: 25px;"></a>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

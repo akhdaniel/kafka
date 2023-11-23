@@ -1,0 +1,10 @@
+Version 16.0.1.1
+===================================
+
+1. Bug fix when auto run is active, then something went wrong like kafka host unavailable, when odoo restart will get infinite error can't load web
+2. Add notification when auto run failed to started to user administrator
+
+Version 16.0.1.2
+===================================
+
+1. Allow kafka to restart when worker reach limit

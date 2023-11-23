@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <record id="action_start_stop_consumer_batch_mode" model="ir.actions.server">
+            <field name="name">Start/Stop Selected</field>
+            <field name="model_id" ref="model_kafka_master_consumer"/>
+            <field name="binding_model_id" ref="model_kafka_master_consumer"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.action_batch_start_stop()</field>
+        </record>
+    
+    </data>
+</odoo>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="kafka_master_consumer_view_tree" model="ir.ui.view">
+            <field name="name">kafka_master_consumer_view_tree</field>
+            <field name="model">kafka.master.consumer</field>
+            <field name="arch" type="xml">
+                <tree string="Kafka Master Consumer Tree">
+                    <field name="running" invisible="1"/>
+                    <button name="run_kafka" string="RUN" class="btn btn-success oe_read_only"
+                            icon="fa-play" type="object" attrs="{'invisible': [('running', '=', True)]}"/>
+                    <button name="stop_kafka" string="STOP" class="btn btn-danger oe_read_only"
+                            icon="fa-stop" type="object" attrs="{'invisible': [('running', '=', False)]}"/>
+                    <field name="name"/>
+                    <field name="model_name"/>
+                    <field name="group"/>
+                    <field name="function"/>
+                    <field name="host"/>
+                    <field name="state" decoration-success="state == 'running'" decoration-danger="state == 'stop'"
+                           widget="badge" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="kafka_master_consumer_view_form" model="ir.ui.view">
+            <field name="name">kafka_master_consumer_view_form</field>
+            <field name="model">kafka.master.consumer</field>
+            <field name="arch" type="xml">
+                <form string="Kafka Master Consumer Form">
+                    <header>
+                        <button name="get_values" string="GET VALUES" class="btn btn-info"
+                                icon="fa-cloud-download" type="object"/>
+                        <button name="run_kafka" string="RUN" class="btn btn-success"
+                                icon="fa-play" type="object"
+                                attrs="{'invisible': ['|', ('running', '=', True), ('active', '=', False)]}"/>
+                        <button name="stop_kafka" string="STOP" class="btn btn-danger"
+                                icon="fa-stop" type="object" attrs="{'invisible': [('running', '=', False)]}"/>
+                    </header>
+                    <field name="running" invisible="1"/>
+
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="active"/>
+                                <field name="name" required="1"/>
+                                <field name="group" required="1"/>
+                                <field name="model_name" required="1"/>
+                                <field name="function" placeholder="Without Parentheses ()" required="1"/>
+                                <field name="commit_on_error"/>
+                                <field name="stop_on_error"/>
+                                <field name="run_at_startup"/>
+                                <field name="thread" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="host" placeholder="localhost:9092" required="1"/>
+                                <field name="params" required="1"/>
+                                <field name="poll_timeout" required="1"/>
+                                <field name="fetch_interval" required="1"/>
+                                <field name="values"/>
+                            </group>
+                        </group>
+                        <group name="tooltips" string="Tooltips">
+                            <p class="text-muted" colspan="2">
+                                <ul>
+                                    <li>
+                                        Set Active, to indicate this Consumer can be used (if False, will archived)
+                                    </li>
+                                    <li>
+                                        Set Kafka Bootstrap_Server separate with comma if > 1 ['host1', 'host2'], set
+                                        parameters (default parameters preset), make sure all is correct otherwise will
+                                        get error
+                                    </li>
+                                    <li>
+                                        Determine the Topic you want to subscribe
+                                    </li>
+                                    <li>
+                                        Specify group_id where each group_id has the last offset of the commit, one
+                                        Topic is not recommended to have the same group_id
+                                    </li>
+                                    <li>
+                                        Specify the Model or Object that you want to use to call the function in it
+                                    </li>
+                                    <li>
+                                        Define a function in the Model above without parentheses, you must first create
+                                        a function with one parameter, for example: <br/>def create_so(self, message):
+                                        ...
+                                    </li>
+                                    <li>
+                                        Specify whether KafkaConsumer will commit offset when failed execute function?
+                                        Otherwise, the offset will only be committed when the function is successful
+                                        and Kafka will keep trying execute again (next offsets in waiting state)
+                                    </li>
+                                    <li>
+                                        Specify whether KafkaConsumer will Stop after failed execute function? Otherwise,
+                                        Kafka will keep running
+                                    </li>
+                                    <li>
+                                        Specify whether KafkaConsumer will auto run when odoo service started or restart
+                                    </li>
+                                    <li>
+                                        Specify fetch interval, help to reduce CPU load (Kafka consume high CPU when active listen)
+                                    </li>
+                                </ul>
+                            </p>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="kafka_master_consumer_action" model="ir.actions.act_window">
+            <field name="name">Kafka Master Consumer</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">kafka.master.consumer</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    There is no examples click here to add new.
+                </p>
+            </field>
+        </record>
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="kafka_master_consumer" name="Kafka Master Consumer" parent="base.menu_automation"
+                  action="kafka_master_consumer_action"
+                  sequence="2"/>
+
+        <record id="action_start_stop_consumer_batch_mode" model="ir.actions.server">
+            <field name="name">Start/Stop Selected</field>
+            <field name="model_id" ref="model_kafka_master_consumer"/>
+            <field name="binding_model_id" ref="model_kafka_master_consumer"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.action_batch_start_stop()</field>
+        </record>
+
+    </data>
+</odoo>
