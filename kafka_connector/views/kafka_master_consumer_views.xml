@@ -20,7 +20,7 @@
                 </tree>
             </field>
         </record>
-<!-- 
+
         <record id="kafka_master_consumer_view_form" model="ir.ui.view">
             <field name="name">kafka_master_consumer_view_form</field>
             <field name="model">kafka.master.consumer</field>
@@ -105,7 +105,7 @@
                     </sheet>
                 </form>
             </field>
-        </record> -->
+        </record>
 
         <!-- <record id="kafka_master_consumer_action" model="ir.actions.act_window">
             <field name="name">Kafka Master Consumer</field>
