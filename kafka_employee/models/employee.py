@@ -31,7 +31,7 @@ class Employee(models.Model):
         producer = KafkaProducer(bootstrap_servers=eval(producerRecord.host),
                         value_serializer=lambda x: dumps(x).encode('utf-8'))
         for x in self:
-            producer.send(topic, value=vals)
+            producer.send(topic, value={"id": x.id, "vals":vals} )
             producer.flush()
         
         return res 
