@@ -13,6 +13,12 @@ _logger = logging.getLogger(__name__)
 class Employee(models.Model):
     _inherit = 'hr.employee'
 
+    
+    nip = fields.Char(
+        string='NIP',
+        required=True
+    )
+    
     # 16 consumer
     def employee_updated(self, message):
         _logger.info('**************************** modify employee ********************')

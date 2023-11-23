@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_nip_inherit_employee" model="ir.ui.view">
+        <field name="name">hr.employee.view.nip.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <field name="work_location" position="after">
+                <field name="nip"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

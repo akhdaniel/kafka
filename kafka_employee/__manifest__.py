@@ -17,6 +17,7 @@
     ],
 
     'data': [
-        'data/consumer.xml'
+        'data/consumer.xml',
+        'views/employee.xml',
     ],
 }
