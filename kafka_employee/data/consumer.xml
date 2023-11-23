@@ -10,17 +10,17 @@
     </record>    
 
     <record id="employee13_updated" model="kafka.master.consumer">
-        <field name="name">employee_updated</field>
+        <field name="name">employee13_updated</field>
         <field name="group">hr13-group</field>
-        <field name="function">modify_employee</field>
+        <field name="function">employee_updated</field>
         <field name="host">['147.139.134.170:9093']</field>
         <field name="model_name" ref="hr.model_hr_employee"/>
         <field name="active" eval="True"/>
     </record>    
     <record id="employee13_created" model="kafka.master.consumer">
-        <field name="name">employee_created</field>
+        <field name="name">employee13_created</field>
         <field name="group">hr13-group</field>
-        <field name="function">modify_employee</field>
+        <field name="function">employee_created</field>
         <field name="host">['147.139.134.170:9093']</field>
         <field name="model_name" ref="hr.model_hr_employee"/>
         <field name="active" eval="True"/>
