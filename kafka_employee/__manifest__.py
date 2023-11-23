@@ -17,5 +17,6 @@
     ],
 
     'data': [
+        'data/consumer.xml'
     ],
 }

@@ -1,0 +1,16 @@
+<odoo>
+<data>
+    <record id="consumer_template" model="kafka.master.consumer">
+        <field name="name">template</field>
+        <field name="group">hr13-group</field>
+        <field name="function">modify_employee</field>
+        <field name="host">['147.139.134.170:9093']</field>
+        <field name="host">['147.139.134.170:9093']</field>
+        <field name="model" ref="hr.employee"/>
+        <field name="active" eval="True"/>
+    </record>    
+
+</data>
+
+
+</odoo>

@@ -35,5 +35,22 @@ class Employee(models.Model):
             producer.flush()
         
         return res 
+    
+
+    def init(self):
+        topics = [
+            "employee13_created",
+            "employee13_updated",
+            "employee13_deleted",
+        ]
+        _logger.info(f'initialize topics for v13...{topics}')
+        producerRecord = self.env['kafka.master.consumer'].search([('active', '=', True), ('name', '=', 'template')], limit=1)
+
+        producer = KafkaProducer(bootstrap_servers=eval(producerRecord.host),
+                        value_serializer=lambda x: dumps(x).encode('utf-8'))
+        for topic in topics:
+            producer.send(topic, value={} )
+            producer.flush()
+        
 
                 
