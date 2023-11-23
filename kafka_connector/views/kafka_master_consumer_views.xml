@@ -6,7 +6,7 @@
             <field name="model">kafka.master.consumer</field>
             <field name="arch" type="xml">
                 <tree string="Kafka Master Consumer Tree">
-                    <!-- <field name="running" invisible="1"/> -->
+                    <field name="running" />
                     <button name="run_kafka" string="RUN" class="btn btn-success oe_read_only"
                             icon="fa-play" type="object" attrs="{'invisible': [('running', '=', True)]}"/>
                     <button name="stop_kafka" string="STOP" class="btn btn-danger oe_read_only"
