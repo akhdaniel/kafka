@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="kafka_master_consumer_view_tree" model="ir.ui.view">
+        <!-- <record id="kafka_master_consumer_view_tree" model="ir.ui.view">
             <field name="name">kafka_master_consumer_view_tree</field>
             <field name="model">kafka.master.consumer</field>
             <field name="arch" type="xml">
@@ -20,7 +20,7 @@
                            widget="badge" optional="show"/>
                 </tree>
             </field>
-        </record>
+        </record> -->
 <!-- 
         <record id="kafka_master_consumer_view_form" model="ir.ui.view">
             <field name="name">kafka_master_consumer_view_form</field>
