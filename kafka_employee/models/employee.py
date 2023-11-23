@@ -13,12 +13,17 @@ _logger = logging.getLogger(__name__)
 class Employee(models.Model):
     _inherit = 'hr.employee'
 
-    # consumer
-    def modify_employee(self, message):
+    # 16 consumer
+    def employee_updated(self, message):
         _logger.info('**************************** modify employee ********************')
         _logger.info(message) #json
         # self.env['hr.employee'].write( message )
-        _logger.info('**************************** modify employee ********************')
+
+    # 16 consumer
+    def employee_created(self, message):
+        _logger.info('**************************** create employee ********************')
+        _logger.info(message) #json
+        # self.env['hr.employee'].write( message )
 
 
     def write(self, vals):
