@@ -51,8 +51,10 @@ class Employee(models.Model):
     def employee_created(self, message):
         _logger.info('**************************** create employee ********************')
         _logger.info(message) #json
-        # self.env['hr.employee'].write( message )
 
+        vals = message.get('vals') 
+        if vals:
+            self.env['hr.employee'].create(vals)
 
     def write(self, vals):
         res = super(Employee, self).write(vals)
