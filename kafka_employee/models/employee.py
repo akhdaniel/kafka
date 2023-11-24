@@ -24,21 +24,28 @@ class Employee(models.Model):
         _logger.info('**************************** modify employee ********************')
         _logger.info(message) #json
 
-        id = message.get('id') 
+        name = message.get('name') 
         nip = message.get('nip') 
         vals = message.get('vals') 
         # self.env['hr.employee'].sudo().browse(id).write( vals )
 
         if nip and vals:
-            kv=[]
-            sql = "update hr_employee"
-            sql += " set "
-            for key in vals.keys():
-                kv.append(f"{key}='{vals[key]}'")
-            sql += ", ".join(kv)
-            sql += f" where nip='{nip}'"
+            exist = self.env['hr.employee'].search([('nip','=',nip)])
+            if exist:
+                kv=[]
+                sql = "update hr_employee"
+                sql += " set "
+                for key in vals.keys():
+                    kv.append(f"{key}='{vals[key]}'")
+                sql += ", ".join(kv)
+                sql += f" where nip='{nip}'"
 
-            self.env.cr.execute(sql)
+                self.env.cr.execute(sql)
+            else:
+                data = vals
+                data.update({'nip':nip, 'name':name})
+                self.env['hr.employee'].create(data)
+
 
     # 16 consumer
     def employee_created(self, message):
