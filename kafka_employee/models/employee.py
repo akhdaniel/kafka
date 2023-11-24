@@ -77,7 +77,7 @@ class Employee(models.Model):
         res = super(Employee, self).create(vals)
 
         # send data to kafka
-        topic = "employee16_created"
+        topic = "employee13_created"
         producer = self.get_producer(topic)
         for x in res:
             producer.send(topic, value={"nip": x.nip, "name": x.name, "vals":vals} )
