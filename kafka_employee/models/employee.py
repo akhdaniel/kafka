@@ -72,6 +72,7 @@ class Employee(models.Model):
         return res 
     
     
+    @api.model_create_multi
     def create(self, vals):
         res = super(Employee, self).create(vals)
 
