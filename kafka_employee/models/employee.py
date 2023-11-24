@@ -61,10 +61,7 @@ class Employee(models.Model):
 
         # send data to kafka
         topic = "employee13_updated"
-        producerRecord = self.env['kafka.master.consumer'].search([('name', '=', topic)], limit=1)
-
-        producer = KafkaProducer(bootstrap_servers=eval(producerRecord.host),
-                        value_serializer=lambda x: dumps(x).encode('utf-8'))
+        producer = self.get_producer(topic)
         for x in self:
             producer.send(topic, value={
                 "nip": x.nip, 
@@ -74,7 +71,27 @@ class Employee(models.Model):
         
         return res 
     
+    
+    def create(self, vals):
+        res = super(Employee, self).create(vals)
 
+        # send data to kafka
+        topic = "employee16_created"
+        producer = self.get_producer(topic)
+        for x in res:
+            producer.send(topic, value={"nip": x.nip, "name": x.name, "vals":vals} )
+            producer.flush()
+
+        return res
+        
+    def get_producer(self, topic):
+        producerRecord = self.env['kafka.master.consumer'].search([('name', '=', topic)], limit=1)
+
+        producer = KafkaProducer(bootstrap_servers=eval(producerRecord.host),
+                        value_serializer=lambda x: dumps(x).encode('utf-8'))        
+        
+        return producer
+    
     def init(self):
         topics = [
             "employee13_created",
