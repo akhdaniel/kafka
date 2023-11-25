@@ -104,8 +104,6 @@ class Employee(models.Model):
         producer = self.get_producer(topic)
         for x in self:
             data = vals[0]
-            del data['message_attachment_count']
-            del data['message_follower_ids']
             producer.send(topic, value={
                 "nip": x.nip, 
                 "name": x.name, 
@@ -124,7 +122,10 @@ class Employee(models.Model):
         topic = "employee13_created"
         producer = self.get_producer(topic)
         for x in res:
-            producer.send(topic, value={"nip": x.nip, "name": x.name, "vals":vals} )
+            producer.send(topic, value={
+                "nip": x.nip, 
+                "name": x.name, 
+                "vals":vals} )
             producer.flush()
 
         return res
