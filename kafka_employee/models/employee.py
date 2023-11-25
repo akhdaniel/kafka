@@ -64,12 +64,11 @@ class Employee(models.Model):
                 data.update({field: vals[0][field]})
 
         # _logger.info(data) #json
+        _logger.info(data)
         if 'message_attachment_count' in data:
             del data['message_attachment_count']
         if 'message_follower_ids' in data:
             del data['message_follower_ids']
-
-        _logger.info(data)
 
         if data:
             exist = self.env['hr.employee'].search([('nip','=',nip)])
