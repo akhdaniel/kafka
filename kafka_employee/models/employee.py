@@ -52,7 +52,7 @@ class Employee(models.Model):
         _logger.info('**************************** create employee ********************')
 
         fields = self.env['hr.employee'].fields_get()
-        _logger.info(fields.keys())
+        # _logger.info(fields.keys())
         # _logger.info(message) #json
         nip = message.get('nip')
         name = message.get('name')
@@ -62,12 +62,14 @@ class Employee(models.Model):
         for field in fields.keys():
             if field in vals[0]:
                 data.update({field: vals[0][field]})
-                
+
         # _logger.info(data) #json
         if 'message_attachment_count' in data:
             del data['message_attachment_count']
         if 'message_follower_ids' in data:
             del data['message_follower_ids']
+
+        _logger.info(data)
 
         if data:
             exist = self.env['hr.employee'].search([('nip','=',nip)])
