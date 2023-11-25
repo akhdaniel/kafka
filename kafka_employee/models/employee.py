@@ -27,7 +27,13 @@ class Employee(models.Model):
         name = message.get('name') 
         nip = message.get('nip') 
         vals = message.get('vals') 
-        # self.env['hr.employee'].sudo().browse(id).write( vals )
+
+        data={}
+        fields = self.env['hr.employee'].fields_get()
+        for field in fields.keys():
+            if field in vals.keys():
+                data.update({field: vals[field]})
+
 
         if nip and vals:
             exist = self.env['hr.employee'].search([('nip','=',nip)])
@@ -35,23 +41,23 @@ class Employee(models.Model):
                 kv=[]
                 sql = "update hr_employee"
                 sql += " set "
-                for key in vals.keys():
-                    kv.append(f"{key}='{vals[key]}'")
+                for key in data.keys():
+                    kv.append(f"{key}='{data[key]}'")
                 sql += ", ".join(kv)
                 sql += f" where nip='{nip}'"
 
                 self.env.cr.execute(sql)
             else:
-                data = vals
-                data.update({'nip':nip, 'name':name})
-                self.env['hr.employee'].create(data)
+                # data = vals
+                # data.update({'nip':nip, 'name':name})
+                # self.env['hr.employee'].create(data)
+                self.employee_created(message)
 
 
     # 16 consumer
     def employee_created(self, message):
         _logger.info('**************************** create employee ********************')
 
-        fields = self.env['hr.employee'].fields_get()
         # _logger.info(fields.keys())
         # _logger.info(message) #json
         nip = message.get('nip')
@@ -60,6 +66,7 @@ class Employee(models.Model):
         # _logger.info(vals)
         
         data = {}
+        fields = self.env['hr.employee'].fields_get()
         for field in fields.keys():
             if field in vals.keys():
                 data.update({field: vals[field]})
