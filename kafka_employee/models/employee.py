@@ -93,8 +93,6 @@ class Employee(models.Model):
 
         # send data to kafka
 
-        del vals['message_attachment_count']
-        del vals['message_follower_ids']
         topic = "employee13_created"
         producer = self.get_producer(topic)
         for x in res:
