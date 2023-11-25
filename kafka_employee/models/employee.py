@@ -64,6 +64,8 @@ class Employee(models.Model):
             if field in vals.keys():
                 data.update({field: vals[field]})
 
+        data.update({"name":name, "nip":nip})
+
         # _logger.info(data) #json
         _logger.info(data)
         if 'message_attachment_count' in data:
