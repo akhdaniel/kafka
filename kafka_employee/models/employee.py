@@ -53,8 +53,12 @@ class Employee(models.Model):
         _logger.info(message) #json
 
         vals = message.get('vals') 
+        data = vals
+        del data['message_attachment_count']
+        del data['message_follower_ids']
+
         if vals:
-            self.env['hr.employee'].create(vals)
+            self.env['hr.employee'].create(data)
 
     def write(self, vals):
         res = super(Employee, self).write(vals)
@@ -63,10 +67,13 @@ class Employee(models.Model):
         topic = "employee13_updated"
         producer = self.get_producer(topic)
         for x in self:
+            data = vals[0]
+            del data['message_attachment_count']
+            del data['message_follower_ids']
             producer.send(topic, value={
                 "nip": x.nip, 
                 "name": x.name, 
-                "vals":vals} )
+                "vals":data} )
             producer.flush()
         
         return res 
