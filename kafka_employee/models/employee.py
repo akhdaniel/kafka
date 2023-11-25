@@ -116,6 +116,7 @@ class Employee(models.Model):
     @api.model
     def create(self, vals):
         res = super(Employee, self).create(vals)
+        _logger.info(vals)
 
         # send data to kafka
 
