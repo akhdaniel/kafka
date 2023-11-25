@@ -52,7 +52,7 @@ class Employee(models.Model):
         _logger.info('**************************** create employee ********************')
 
         fields = self.env['hr.employee'].fields_get()
-        _logger.info(fields)
+        _logger.info(fields.keys())
         # _logger.info(message) #json
         nip = message.get('nip')
         name = message.get('name')
