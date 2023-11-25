@@ -57,6 +57,7 @@ class Employee(models.Model):
         nip = message.get('nip')
         name = message.get('name')
         vals = message.get('vals') 
+        _logger.info(vals)
         
         data = {}
         for field in fields.keys():
