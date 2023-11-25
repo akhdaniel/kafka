@@ -26,8 +26,7 @@ class Employee(models.Model):
 
         name = message.get('name') 
         nip = message.get('nip') 
-        vals = message.get('vals') 
-        _logger.info(vals)
+        vals = message.get('vals') # dict
 
         data={}
         fields = self.env['hr.employee'].fields_get()
@@ -49,6 +48,7 @@ class Employee(models.Model):
                     sql += f" where nip='{nip}'"
 
                     self.env.cr.execute(sql)
+                    _logger.info('updated')
             else:
                 # data = vals
                 # data.update({'nip':nip, 'name':name})
@@ -87,11 +87,12 @@ class Employee(models.Model):
         if '__last_update' in data:
             del data['__last_update']
 
-        _logger.info(data)
+        # _logger.info(data)
 
         exist = self.env['hr.employee'].search([('nip','=',nip)])
         if not exist:
             self.env['hr.employee'].create(data)
+            _logger.info('created')
         else:
             _logger.info(f'empoloyee {name} exists...')
 
