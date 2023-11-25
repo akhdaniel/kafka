@@ -51,7 +51,8 @@ class Employee(models.Model):
     def employee_created(self, message):
         _logger.info('**************************** create employee ********************')
         # _logger.info(message) #json
-
+        nip = message.get('nip')
+        name = message.get('name')
         vals = message.get('vals') 
         data = vals[0]
         _logger.info(data) #json
@@ -61,7 +62,11 @@ class Employee(models.Model):
             del data['message_follower_ids']
 
         if data:
-            self.env['hr.employee'].create(data)
+            exist = self.envp['hr.employee'].search([('nip','='nip)])
+            if not exist:
+                self.env['hr.employee'].create(data)
+            else:
+                _logger.info(f'empoloyee {name} exists...')
 
     def write(self, vals):
         res = super(Employee, self).write(vals)
