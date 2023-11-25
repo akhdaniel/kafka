@@ -141,6 +141,7 @@ class Employee(models.Model):
         for topic in topics:
             producer.send(topic, value={} )
             producer.flush()
-        
 
-                
+    def action_test_create(self):
+        data = {'active': True, 'address_home_id': False, 'country_id': False, 'gender': False, 'marital': 'single', 'spouse_complete_name': False, 'spouse_birthdate': False, 'children': 0, 'place_of_birth': False, 'country_of_birth': False, 'birthday': False, 'identification_id': False, 'passport_id': False, 'bank_account_id': False, 'permit_no': False, 'visa_no': False, 'visa_expire': False, 'certificate': 'other', 'study_field': False, 'study_school': False, 'emergency_contact': False, 'emergency_phone': False, 'km_home_work': 0, 'image_1920': False, 'barcode': False, 'pin': False, 'departure_description': False, 'nip': 'A9', 'department_id': False, 'job_id': False, 'job_title': False, 'company_id': 1, 'address_id': 1, 'work_phone': '+62 21 8516290', 'mobile_phone': False, 'work_email': False, 'resource_calendar_id': 1, 'parent_id': False, 'coach_id': False, 'name': 'Abi A9'}
+        self.env['hr.employee'].create(data)

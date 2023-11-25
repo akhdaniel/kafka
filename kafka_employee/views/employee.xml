@@ -6,8 +6,13 @@
         <field name="model">hr.employee</field>
         <field name="inherit_id" ref="hr.view_employee_form"/>
         <field name="arch" type="xml">
+            <header position="inside">
+                <button name="action_test_create" type="object" string="test create"/>
+            </header>
+
             <field name="work_location" position="after">
                 <field name="nip"/>
+
             </field>
         </field>
     </record>
