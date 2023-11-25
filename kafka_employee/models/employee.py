@@ -60,7 +60,7 @@ class Employee(models.Model):
         
         data = {}
         for field in fields.keys():
-            if field in vals[0]:
+            if field in vals[0].keys():
                 data.update({field: vals[0][field]})
 
         # _logger.info(data) #json
