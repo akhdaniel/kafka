@@ -50,14 +50,15 @@ class Employee(models.Model):
     # 16 consumer
     def employee_created(self, message):
         _logger.info('**************************** create employee ********************')
-        _logger.info(message) #json
+        # _logger.info(message) #json
 
         vals = message.get('vals') 
         data = vals[0]
+        _logger.info(data) #json
         del data['message_attachment_count']
         del data['message_follower_ids']
 
-        if vals:
+        if data:
             self.env['hr.employee'].create(data)
 
     def write(self, vals):
