@@ -50,12 +50,15 @@ class Employee(models.Model):
     # 16 consumer
     def employee_created(self, message):
         _logger.info('**************************** create employee ********************')
+
+        fields = self.env['hr.employee'].fields_get()
+        _logger.info(fields)
         # _logger.info(message) #json
         nip = message.get('nip')
         name = message.get('name')
         vals = message.get('vals') 
         data = vals[0]
-        _logger.info(data) #json
+        # _logger.info(data) #json
         if 'message_attachment_count' in data:
             del data['message_attachment_count']
         if 'message_follower_ids' in data:
