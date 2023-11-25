@@ -27,6 +27,7 @@ class Employee(models.Model):
         name = message.get('name') 
         nip = message.get('nip') 
         vals = message.get('vals') 
+        _logger.info(vals)
 
         data={}
         fields = self.env['hr.employee'].fields_get()
@@ -38,15 +39,16 @@ class Employee(models.Model):
         if nip and vals:
             exist = self.env['hr.employee'].search([('nip','=',nip)])
             if exist:
-                kv=[]
-                sql = "update hr_employee"
-                sql += " set "
-                for key in data.keys():
-                    kv.append(f"{key}='{data[key]}'")
-                sql += ", ".join(kv)
-                sql += f" where nip='{nip}'"
+                if data:
+                    kv=[]
+                    sql = "update hr_employee"
+                    sql += " set "
+                    for key in data.keys():
+                        kv.append(f"{key}='{data[key]}'")
+                    sql += ", ".join(kv)
+                    sql += f" where nip='{nip}'"
 
-                self.env.cr.execute(sql)
+                    self.env.cr.execute(sql)
             else:
                 # data = vals
                 # data.update({'nip':nip, 'name':name})
