@@ -57,12 +57,12 @@ class Employee(models.Model):
         nip = message.get('nip')
         name = message.get('name')
         vals = message.get('vals') 
-        _logger.info(vals)
+        # _logger.info(vals)
         
         data = {}
         for field in fields.keys():
-            if field in vals[0].keys():
-                data.update({field: vals[0][field]})
+            if field in vals.keys():
+                data.update({field: vals[field]})
 
         # _logger.info(data) #json
         _logger.info(data)
