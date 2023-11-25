@@ -57,7 +57,12 @@ class Employee(models.Model):
         nip = message.get('nip')
         name = message.get('name')
         vals = message.get('vals') 
-        data = vals[0]
+        
+        data = {}
+        for field in fields.keys():
+            if field in vals[0]:
+                data.update({field: vals[0][field]})
+                
         # _logger.info(data) #json
         if 'message_attachment_count' in data:
             del data['message_attachment_count']
