@@ -75,6 +75,8 @@ class Employee(models.Model):
             del data['resource_id']
         if 'category_ids' in data:
             del data['category_ids']
+        if '__last_update' in data:
+            del data['__last_update']
 
         _logger.info(data)
 
