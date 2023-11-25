@@ -103,7 +103,7 @@ class Employee(models.Model):
         topic = "employee13_updated"
         producer = self.get_producer(topic)
         for x in self:
-            data = vals[0]
+            data = vals
             producer.send(topic, value={
                 "nip": x.nip, 
                 "name": x.name, 
