@@ -67,7 +67,6 @@ class Employee(models.Model):
         data.update({"name":name, "nip":nip})
 
         # _logger.info(data) #json
-        _logger.info(data)
         if 'message_attachment_count' in data:
             del data['message_attachment_count']
         if 'message_follower_ids' in data:
@@ -77,12 +76,13 @@ class Employee(models.Model):
         if 'category_ids' in data:
             del data['category_ids']
 
-        if data:
-            exist = self.env['hr.employee'].search([('nip','=',nip)])
-            if not exist:
-                self.env['hr.employee'].create(data)
-            else:
-                _logger.info(f'empoloyee {name} exists...')
+        _logger.info(data)
+
+        exist = self.env['hr.employee'].search([('nip','=',nip)])
+        if not exist:
+            self.env['hr.employee'].create(data)
+        else:
+            _logger.info(f'empoloyee {name} exists...')
 
     def write(self, vals):
         res = super(Employee, self).write(vals)
