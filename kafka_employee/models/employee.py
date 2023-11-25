@@ -62,7 +62,7 @@ class Employee(models.Model):
             del data['message_follower_ids']
 
         if data:
-            exist = self.envp['hr.employee'].search([('nip','='nip)])
+            exist = self.envp['hr.employee'].search([('nip','=',nip)])
             if not exist:
                 self.env['hr.employee'].create(data)
             else:
