@@ -70,6 +70,8 @@ class Employee(models.Model):
             del data['message_attachment_count']
         if 'message_follower_ids' in data:
             del data['message_follower_ids']
+        if 'resource_id' in data:
+            del data['resource_id']
 
         if data:
             exist = self.env['hr.employee'].search([('nip','=',nip)])
