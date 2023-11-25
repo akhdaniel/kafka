@@ -55,8 +55,10 @@ class Employee(models.Model):
         vals = message.get('vals') 
         data = vals[0]
         _logger.info(data) #json
-        del data['message_attachment_count']
-        del data['message_follower_ids']
+        if 'message_attachment_count' in data:
+            del data['message_attachment_count']
+        if 'message_follower_ids' in data:
+            del data['message_follower_ids']
 
         if data:
             self.env['hr.employee'].create(data)
