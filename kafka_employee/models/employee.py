@@ -53,7 +53,7 @@ class Employee(models.Model):
         _logger.info(message) #json
 
         vals = message.get('vals') 
-        data = vals
+        data = vals[0]
         del data['message_attachment_count']
         del data['message_follower_ids']
 
