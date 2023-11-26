@@ -104,7 +104,7 @@ class Employee(models.Model):
         topic = "employee13_updated"
         producer = self.get_producer(topic)
         for x in self:
-            data = self.format_fields(vals)
+            data = self.format_outgoing_fields(vals)
             producer.send(topic, value={
                 "nip":  x.nip, 
                 "name": x.name, 
@@ -116,7 +116,7 @@ class Employee(models.Model):
     """
     format field many2one supaya di penerima muncul id dan name
     """    
-    def format_fields(self, vals):
+    def format_outgoing_fields(self, vals):
         data = vals
         fields = self.env['hr.employee'].fields_get()
         for field_name in fields.keys():
