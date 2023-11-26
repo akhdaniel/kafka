@@ -104,16 +104,19 @@ class Employee(models.Model):
         topic = "employee13_updated"
         producer = self.get_producer(topic)
         for x in self:
-            data = self.process_fields(vals)
+            data = self.format_fields(vals)
             producer.send(topic, value={
-                "nip": x.nip, 
+                "nip":  x.nip, 
                 "name": x.name, 
-                "vals":data} )
+                "vals": data} )
             producer.flush()
         
         return res 
     
-    def process_fields(self, vals):
+    """
+    format field many2one supaya di penerima muncul id dan name
+    """    
+    def format_fields(self, vals):
         data = vals
         fields = self.env['hr.employee'].fields_get()
         for field_name in fields.keys():
@@ -121,10 +124,7 @@ class Employee(models.Model):
                 field = fields[field_name]
                 if field['type']=='many2one':
                     id = vals[field_name]
-                    _logger.info(field_name)
-                    _logger.info(id)
-                    _logger.info(field)
-                    data[field_name]=(id, self.env[field['relation']].browse(id)['name'])
+                    data[field_name]={"id": id, "name": self.env[field['relation']].browse(id)['name']}
 
         _logger.info(data)
         return data
