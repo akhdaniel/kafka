@@ -120,10 +120,13 @@ class Employee(models.Model):
             if field_name in vals.keys():
                 field = fields[field_name]
                 if field['type']=='many2one':
+                    id = vals[field_name]
                     _logger.info(field_name)
-                    _logger.info(vals[field_name])
+                    _logger.info(id)
                     _logger.info(field)
+                    data[field_name]=(id, self.env[field['relation']].browse(id)['name'])
 
+        _logger.info(data)
         return data
 
     @api.model
