@@ -128,7 +128,7 @@ class Employee(models.Model):
                     rel = field['relation']
                     data[field_name]={
                         "type":field['type'], 
-                        "relation": rel
+                        "relation": rel,
                         "value":{
                             "id": id, 
                             "name": self.env[rel].browse(id)['name'],
