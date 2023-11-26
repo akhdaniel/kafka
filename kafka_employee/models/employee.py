@@ -117,7 +117,7 @@ class Employee(models.Model):
         data = vals
         fields = self.env['hr.employee'].fields_get()
         for field in fields.keys():
-            _logger.info(field)
+            _logger.info(fields[field])
 
         return data
 
