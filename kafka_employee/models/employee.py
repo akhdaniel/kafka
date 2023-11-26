@@ -104,7 +104,7 @@ class Employee(models.Model):
         topic = "employee13_updated"
         producer = self.get_producer(topic)
         for x in self:
-            data = vals
+            data = self.process_fields(vals)
             producer.send(topic, value={
                 "nip": x.nip, 
                 "name": x.name, 
@@ -113,7 +113,14 @@ class Employee(models.Model):
         
         return res 
     
-    
+    self process_fields(self, vals):
+        data = vals
+        fields = self.env['hr.employee'].fields_get()
+        for field in fields.keys():
+            _logger.info(field)
+
+        return data
+
     @api.model
     def create(self, vals):
         res = super(Employee, self).create(vals)
