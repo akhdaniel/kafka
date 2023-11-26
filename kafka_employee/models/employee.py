@@ -113,7 +113,7 @@ class Employee(models.Model):
         
         return res 
     
-    self process_fields(self, vals):
+    def process_fields(self, vals):
         data = vals
         fields = self.env['hr.employee'].fields_get()
         for field in fields.keys():
