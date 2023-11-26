@@ -118,6 +118,7 @@ class Employee(models.Model):
         fields = self.env['hr.employee'].fields_get()
         for field in fields.keys():
             if field in vals.keys():
+                _logger.info(field)
                 _logger.info(vals[field])
                 _logger.info(fields[field])
 
