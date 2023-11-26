@@ -122,9 +122,19 @@ class Employee(models.Model):
         for field_name in fields.keys():
             if field_name in vals.keys():
                 field = fields[field_name]
-                if field['type']=='many2one':
+                field_type=field['type']
+                if field_type=='many2one':
                     id = vals[field_name]
-                    data[field_name]={"id": id, "name": self.env[field['relation']].browse(id)['name']}
+                    data[field_name]={
+                        "type":field['type'], 
+                        "value":{
+                            "id": id, "name": self.env[field['relation']].browse(id)['name']
+                        }}
+                else:
+                    data[field_name]={
+                        "type": field_type,
+                        "value": vals[field_name]
+                    }
 
         _logger.info(data)
         return data
