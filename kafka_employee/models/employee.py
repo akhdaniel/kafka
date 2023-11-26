@@ -125,10 +125,13 @@ class Employee(models.Model):
                 field_type=field['type']
                 if field_type=='many2one':
                     id = vals[field_name]
+                    rel = field['relation']
                     data[field_name]={
                         "type":field['type'], 
                         "value":{
-                            "id": id, "name": self.env[field['relation']].browse(id)['name']
+                            "id": id, 
+                            "name": self.env[rel].browse(id)['name'],
+                            "relation": rel
                         }}
                 else:
                     data[field_name]={
