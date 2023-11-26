@@ -116,11 +116,13 @@ class Employee(models.Model):
     def process_fields(self, vals):
         data = vals
         fields = self.env['hr.employee'].fields_get()
-        for field in fields.keys():
-            if field in vals.keys():
-                _logger.info(field)
-                _logger.info(vals[field])
-                _logger.info(fields[field])
+        for field_name in fields.keys():
+            if field_name in vals.keys():
+                field = fields[field_name]
+                if field['type']=='many2one':
+                    _logger.info(field_name)
+                    _logger.info(vals[field_name])
+                    _logger.info(field)
 
         return data
 
