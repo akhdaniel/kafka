@@ -18,6 +18,6 @@
 
     'data': [
         'data/consumer.xml',
-        'views/employee.xml',
+        # 'views/employee.xml',
     ],
 }
