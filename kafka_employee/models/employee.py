@@ -13,11 +13,7 @@ _logger = logging.getLogger(__name__)
 class Employee(models.Model):
     _inherit = 'hr.employee'
 
-    
-    nip = fields.Char(
-        string='NIP',
-        required=True
-    )
+
     
     #  consumer from 16
     def employee_updated(self, message):
@@ -25,7 +21,7 @@ class Employee(models.Model):
         _logger.info(message) #json
 
         name = message.get('name') 
-        nip = message.get('nip') 
+        employee_nip = message.get('employee_nip') 
         vals = message.get('vals') # dict
 
         data={}
@@ -35,8 +31,8 @@ class Employee(models.Model):
                 data.update({field: vals[field]})
 
 
-        if nip and vals:
-            exist = self.env['hr.employee'].search([('nip','=',nip)])
+        if employee_nip and vals:
+            exist = self.env['hr.employee'].search([('employee_nip','=',employee_nip)])
             if exist:
                 if data:
                     kv=[]
@@ -45,13 +41,13 @@ class Employee(models.Model):
                     for key in data.keys():
                         kv.append(f"{key}='{data[key]}'")
                     sql += ", ".join(kv)
-                    sql += f" where nip='{nip}'"
+                    sql += f" where employee_nip='{employee_nip}'"
 
                     self.env.cr.execute(sql)
                     _logger.info('updated')
             else:
                 # data = vals
-                # data.update({'nip':nip, 'name':name})
+                # data.update({'employee_nip':employee_nip, 'name':name})
                 # self.env['hr.employee'].create(data)
                 self.employee_created(message)
 
@@ -62,7 +58,7 @@ class Employee(models.Model):
 
         # _logger.info(fields.keys())
         # _logger.info(message) #json
-        nip = message.get('nip')
+        employee_nip = message.get('employee_nip')
         name = message.get('name')
         vals = message.get('vals') 
         # _logger.info(vals)
@@ -73,7 +69,7 @@ class Employee(models.Model):
             if field in vals.keys():
                 data.update({field: vals[field]})
 
-        data.update({"name":name, "nip":nip})
+        data.update({"name":name, "employee_nip":employee_nip})
 
         # _logger.info(data) #json
         if 'message_attachment_count' in data:
@@ -89,7 +85,7 @@ class Employee(models.Model):
 
         # _logger.info(data)
 
-        exist = self.env['hr.employee'].search([('nip','=',nip)])
+        exist = self.env['hr.employee'].search([('employee_nip','=',employee_nip)])
         if not exist:
             self.env['hr.employee'].create(data)
             _logger.info('created')
@@ -106,7 +102,7 @@ class Employee(models.Model):
         for x in self:
             data = self.format_outgoing_fields(vals)
             producer.send(topic, value={
-                "nip":  x.nip, 
+                "employee_nip":  x.employee_nip, 
                 "name": x.name, 
                 "vals": data} )
             producer.flush()
@@ -153,7 +149,7 @@ class Employee(models.Model):
         producer = self.get_producer(topic)
         for x in res:
             producer.send(topic, value={
-                "nip": x.nip, 
+                "employee_nip": x.employee_nip, 
                 "name": x.name, 
                 "vals":vals} )
             producer.flush()
@@ -184,5 +180,5 @@ class Employee(models.Model):
             producer.flush()
 
     def action_test_create(self):
-        data = {'active': True, 'address_home_id': False, 'country_id': False, 'gender': False, 'marital': 'single', 'spouse_complete_name': False, 'spouse_birthdate': False, 'children': 0, 'place_of_birth': False, 'country_of_birth': False, 'birthday': False, 'identification_id': False, 'passport_id': False, 'bank_account_id': False, 'permit_no': False, 'visa_no': False, 'visa_expire': False, 'certificate': 'other', 'study_field': False, 'study_school': False, 'emergency_contact': False, 'emergency_phone': False, 'km_home_work': 0, 'image_1920': False, 'barcode': False, 'pin': False, 'departure_description': False, 'nip': 'A9', 'department_id': False, 'job_id': False, 'job_title': False, 'company_id': 1, 'address_id': 1, 'work_phone': '+62 21 8516290', 'mobile_phone': False, 'work_email': False, 'resource_calendar_id': 1, 'parent_id': False, 'coach_id': False, 'name': 'Abi A9'}
+        data = {'active': True, 'address_home_id': False, 'country_id': False, 'gender': False, 'marital': 'single', 'spouse_complete_name': False, 'spouse_birthdate': False, 'children': 0, 'place_of_birth': False, 'country_of_birth': False, 'birthday': False, 'identification_id': False, 'passport_id': False, 'bank_account_id': False, 'permit_no': False, 'visa_no': False, 'visa_expire': False, 'certificate': 'other', 'study_field': False, 'study_school': False, 'emergency_contact': False, 'emergency_phone': False, 'km_home_work': 0, 'image_1920': False, 'barcode': False, 'pin': False, 'departure_description': False, 'employee_nip': 'A9', 'department_id': False, 'job_id': False, 'job_title': False, 'company_id': 1, 'address_id': 1, 'work_phone': '+62 21 8516290', 'mobile_phone': False, 'work_email': False, 'resource_calendar_id': 1, 'parent_id': False, 'coach_id': False, 'name': 'Abi A9'}
         self.env['hr.employee'].create(data)
