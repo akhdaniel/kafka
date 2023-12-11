@@ -33,7 +33,7 @@ class mrk_project_parameter(models.Model):
         _logger.info(vals)
 
         # send data to kafka
-        topic = "informasi_pasar13_updated"
+        topic = "informasi_pasar13_created"
         producer = self.get_producer(topic)
         for x in res:
             producer.send(topic, value={
