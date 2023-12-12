@@ -3,16 +3,16 @@
 
         <record id="informasi_pasar13_updated" model="kafka.master.consumer">
             <field name="name">informasi_pasar13_updated</field>
-            <field name="group">hr13-group</field>
+            <field name="group">sd13-group</field>
             <field name="function">informasi_pasar_updated</field>
             <field name="host">['147.139.134.170:9093']</field>
             <field name="model_name" ref="mrk_project_parameter.model_mrk_project_parameter"/>
             <field name="active" eval="True"/>
         </record>
-        
+
         <record id="informasi_pasar13_created" model="kafka.master.consumer">
             <field name="name">informasi_pasar13_created</field>
-            <field name="group">hr13-group</field>
+            <field name="group">sd13-group</field>
             <field name="function">informasi_pasar_created</field>
             <field name="host">['147.139.134.170:9093']</field>
             <field name="model_name" ref="mrk_project_parameter.model_mrk_project_parameter"/>
