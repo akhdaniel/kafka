@@ -60,7 +60,6 @@ class Employee(models.Model):
         # _logger.info(message) #json
         employee_nip = message.get('employee_nip')
         name = message.get('name')
-
         vals = message.get('vals') 
         # _logger.info(vals)
         
@@ -105,13 +104,6 @@ class Employee(models.Model):
             producer.send(topic, value={
                 "employee_nip":  x.employee_nip, 
                 "name": x.name, 
-                "partner_name": x.partner_id.name or False,
-                "sistem_kontrak":x.sistem_kontrak.name or False,
-                "pagu_anggaran":x.planned_revenue,
-                "harga_perkiraan":x.hps,
-                "bobot": x.persen_bobot_infopasar,
-                "kesimpulan": x.string_bobot_infopasar,
-                "state":dict(self._fields['state'].selection).get(x.state),
                 "vals": data} )
             producer.flush()
         
@@ -158,14 +150,7 @@ class Employee(models.Model):
         for x in res:
             producer.send(topic, value={
                 "employee_nip": x.employee_nip, 
-                "name": x.name,
-                "partner_name": x.partner_id.name or False,
-                "sistem_kontrak":x.sistem_kontrak.name or False,
-                "pagu_anggaran":x.planned_revenue,
-                "harga_perkiraan":x.hps,
-                "bobot": x.persen_bobot_infopasar,
-                "kesimpulan": x.string_bobot_infopasar,
-                "state":dict(self._fields['state'].selection).get(x.state),
+                "name": x.name, 
                 "vals":vals} )
             producer.flush()
 

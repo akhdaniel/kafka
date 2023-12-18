@@ -21,7 +21,14 @@ class mrk_project_parameter(models.Model):
         for x in self:
             producer.send(topic, value={
                 "sequents": x.sequents, 
-                "name": x.name} )
+                "name": x.name
+                "partner_name": x.partner_id.name or False,
+                "sistem_kontrak":x.sistem_kontrak.name or False,
+                "pagu_anggaran":x.planned_revenue,
+                "harga_perkiraan":x.hps,
+                "bobot": x.persen_bobot_infopasar,
+                "kesimpulan": x.string_bobot_infopasar,
+                "state":dict(self._fields['state'].selection).get(x.state),} )
             producer.flush()
         
         return res 
@@ -38,7 +45,14 @@ class mrk_project_parameter(models.Model):
         for x in res:
             producer.send(topic, value={
                 "sequents": x.sequents, 
-                "name": x.name} )
+                "name": x.name,
+                "partner_name": x.partner_id.name or False,
+                "sistem_kontrak":x.sistem_kontrak.name or False,
+                "pagu_anggaran":x.planned_revenue,
+                "harga_perkiraan":x.hps,
+                "bobot": x.persen_bobot_infopasar,
+                "kesimpulan": x.string_bobot_infopasar,
+                "state":dict(self._fields['state'].selection).get(x.state)})
             producer.flush()
 
         return res
