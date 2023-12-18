@@ -16,7 +16,7 @@ class mrk_project_parameter(models.Model):
     def write(self, vals):
         res = super(mrk_project_parameter, self).write(vals)
         _logger.info(vals)
-        topic = "informasi_pasar16_updated"
+        topic = "informasi_pasar13_created"
         producer = self.get_producer(topic)
         for x in self:
             producer.send(topic, value={
@@ -26,8 +26,8 @@ class mrk_project_parameter(models.Model):
                 "sistem_kontrak":x.sistem_kontrak.name or False,
                 "pagu_anggaran":x.planned_revenue,
                 "harga_perkiraan":x.hps,
-                # "bobot": x.persen_bobot_infopasar,
-                #kesimpulan": x.string_bobot_infopasar,
+                "bobot": x.persen_bobot_infopasar,
+                "kesimpulan": x.string_bobot_infopasar,
                 "state":dict(self._fields['state'].selection).get(x.state),} )
             producer.flush()
         
@@ -40,7 +40,7 @@ class mrk_project_parameter(models.Model):
         _logger.info(vals)
 
         # send data to kafka
-        topic = "informasi_pasar16_updated"
+        topic = "informasi_pasar13_updated"
         producer = self.get_producer(topic)
         for x in res:
             producer.send(topic, value={
@@ -50,8 +50,8 @@ class mrk_project_parameter(models.Model):
                 "sistem_kontrak":x.sistem_kontrak.name or False,
                 "pagu_anggaran":x.planned_revenue,
                 "harga_perkiraan":x.hps,
-                # "bobot": x.persen_bobot_infopasar,
-               #"kesimpulan": x.string_bobot_infopasar,
+                "bobot": x.persen_bobot_infopasar,
+                "kesimpulan": x.string_bobot_infopasar,
                 "state":dict(self._fields['state'].selection).get(x.state)})
             producer.flush()
 
