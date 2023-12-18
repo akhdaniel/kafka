@@ -21,7 +21,7 @@ class mrk_project_parameter(models.Model):
         for x in self:
             producer.send(topic, value={
                 "sequents": x.sequents, 
-                "name": x.name
+                "name": x.name,
                 "partner_name": x.partner_id.name or False,
                 "sistem_kontrak":x.sistem_kontrak.name or False,
                 "pagu_anggaran":x.planned_revenue,
